@@ -6,7 +6,19 @@ app.get("/random", (req,res)=>{
     const randomIndex = Math.floor(Math.random()*jokes.length);
     res.json(jokes[randomIndex]);
 });
-
+//getting jokes by id
+app.use(bodyParser.urlencoded({extended: true}));
+app.get("/jokes/:id", (req,res)=>{
+  const id = parseInt(req.params.id);
+  const foundJoke = jokes.find((joke)=> joke.id === id);
+  res.json(foundJoke);
+})
+//getting joke by type
+app.get("/filter", (req,res)=>{
+  const type = req.query.type;
+  const jokeByType = jokes.filter((joke)=> joke.type === type);
+  res.json(jokeByType);
+})
 const PORT = 3000;
 app.listen(PORT, ()=>{
     console.log(`Server is running on http://localhost:${PORT}`);
