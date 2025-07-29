@@ -13,7 +13,17 @@ app.post("/jokes", (req,res)=>{
     console.log(jokes.slice(-1));
     res.json(newJoke);
 })
-
+app.put("/jokes/:id", (req,res)=>{
+    const id = parseInt(req.params.id);
+    const updateJoke = {
+        id:id,
+        joke : req.body.text,
+        type : req.body.type,
+    };
+    const searchIndex = jokes.findIndex((joke)=> joke.id === id);
+    jokes[searchIndex] = updateJoke;
+    res.json(updateJoke);
+});
 const PORT = 3000;
 app.listen(PORT, ()=>{
     console.log(`serv3er is running on address http://localhost:${PORT}`);
